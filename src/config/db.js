@@ -1,9 +1,13 @@
 import pg from 'pg'
 import 'dotenv/config'
 
-// Neon es PostgreSQL: se conecta con el Pool de "pg" usando la cadena de conexion
+// PostgreSQL local (la misma base que se abre en DBeaver)
 const pool = new pg.Pool({
-  connectionString: process.env.DATABASE_URL,
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  database: process.env.DB_NAME,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
 })
 
 pool.on('error', (err) => {
