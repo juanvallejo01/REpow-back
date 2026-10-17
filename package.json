@@ -1,7 +1,7 @@
 {
   "name": "repow-back",
   "version": "1.0.0",
-  "description": "API REST con Express y Neon (PostgreSQL)",
+  "description": "API REST de reservas de espacios con Express y PostgreSQL",
   "type": "module",
   "main": "src/index.js",
   "scripts": {
