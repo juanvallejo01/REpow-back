@@ -45,6 +45,32 @@ const ReservaModel = {
     )
     return rows[0]
   },
+
+  // bloqueo optimista: solo actualiza si la version que manda el cliente sigue igual
+  // la version sube sola con el trigger reservas_subir_version (ver schema.sql)
+  // devuelve null si no actualizo nada: no existe, esta cancelada o la version cambio
+  async update(id, version, { responsable, inicio, fin }){
+    const { rows } = await pool.query(
+      `UPDATE reservas
+          SET responsable = $3, inicio = $4, fin = $5
+        WHERE id = $1 AND version = $2 AND estado = 'activa'
+       RETURNING ${COLUMNAS}`,
+      [id, version, responsable, inicio, fin]
+    )
+    return rows[0] || null
+  },
+
+  // cancelar tambien usa la version, igual que update
+  async cancel(id, version){
+    const { rows } = await pool.query(
+      `UPDATE reservas
+          SET estado = 'cancelada'
+        WHERE id = $1 AND version = $2 AND estado = 'activa'
+       RETURNING ${COLUMNAS}`,
+      [id, version]
+    )
+    return rows[0] || null
+  },
 }
 
 export default ReservaModel

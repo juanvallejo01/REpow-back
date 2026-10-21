@@ -22,3 +22,15 @@ export function fechaHoraValida(valor, nombre){
   }
   return valor
 }
+
+// If-Match: "3" -> 3  (la version que tenia el cliente cuando abrio la reserva)
+export function versionDeIfMatch(req){
+  const valor = req.get('If-Match')
+  if (!valor) throw new HttpError(428, 'Falta el header If-Match con la version de la reserva')
+
+  const version = Number(valor.replaceAll('"', ''))
+  if (!Number.isInteger(version) || version <= 0) {
+    throw new HttpError(400, 'If-Match debe tener la version de la reserva, ej: "3"')
+  }
+  return version
+}
