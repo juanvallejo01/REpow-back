@@ -1,6 +1,5 @@
+// VALIDACIONES: revisan los datos que llegan; si estan mal lanzan un error 400 o 428
 import { HttpError } from '../middlewares/errorHandler.js'
-
-// validaciones que comparten los controladores
 
 export function idValido(valor, nombre = 'id'){
   const id = Number(valor)

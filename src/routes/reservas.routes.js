@@ -1,3 +1,4 @@
+// RUTAS DE RESERVAS: que funcion del controlador atiende cada URL
 import { Router } from 'express'
 import ReservasController from '../controllers/reservas.controller.js'
 

@@ -1,7 +1,8 @@
+// PREPARAR LA BASE: npm run db:setup
 import { readFile } from 'node:fs/promises'
 import pool from '../config/db.js'
 
-// npm run db:setup -> crea las tablas (schema.sql) y carga los datos de prueba (seed.sql)
+// crea las tablas (schema.sql) y carga los datos de prueba (seed.sql)
 async function correr(archivo){
   const sql = await readFile(new URL(archivo, import.meta.url), 'utf8')
   await pool.query(sql)

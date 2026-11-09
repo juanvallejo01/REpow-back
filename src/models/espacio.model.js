@@ -1,3 +1,4 @@
+// MODELO DE ESPACIOS: solo consultas SQL a la tabla espacios
 import pool from '../config/db.js'
 
 const EspacioModel = {

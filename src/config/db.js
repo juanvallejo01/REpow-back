@@ -1,3 +1,4 @@
+// CONEXION A POSTGRESQL: los modelos usan este pool para hacer sus consultas
 import pg from 'pg'
 import 'dotenv/config'
 

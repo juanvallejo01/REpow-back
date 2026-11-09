@@ -1,6 +1,8 @@
+// CONTROLADOR DE RESERVAS: valida la peticion, llama al modelo y responde
+// aqui se decide el 412 cuando la version ya cambio (ver responderFallo)
 import ReservaModel from '../models/reserva.model.js'
 import { HttpError } from '../middlewares/errorHandler.js'
-import { idValido, fechaHoraValida, versionDeIfMatch } from './validar.js'
+import { idValido, fechaHoraValida, versionDeIfMatch } from '../utils/validar.js'
 
 // la version de cada reserva viaja en el header ETag, ej: ETag: "3"
 function responderReserva(res, status, reserva){

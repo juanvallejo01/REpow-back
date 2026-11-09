@@ -40,8 +40,9 @@ src/
 ├── config/db.js             conexion a PostgreSQL
 ├── routes/                  que URL va a que controlador
 ├── controllers/             validan los datos y responden
-│   └── validar.js           validaciones compartidas (ids, fechas, If-Match)
 ├── models/                  solo consultas SQL
+├── utils/
+│   └── validar.js           validaciones compartidas (ids, fechas, If-Match)
 ├── middlewares/
 │   └── errorHandler.js      todos los errores responden { success: false, message }
 └── db/
@@ -52,6 +53,18 @@ src/
 ```
 
 Flujo de una petición: **ruta → controlador → modelo → base de datos**.
+
+## Dónde cambiar cada cosa
+
+| Quiero cambiar... | Archivo |
+|-------------------|---------|
+| Una URL de la API | `src/routes/` |
+| Una validación o un mensaje | `src/controllers/` y `src/utils/validar.js` |
+| Una consulta SQL | `src/models/` |
+| Una tabla o una regla de la base | `src/db/schema.sql` |
+| Los datos de prueba | `src/db/seed.sql` |
+| Los mensajes de error de la base | `src/middlewares/errorHandler.js` |
+| Los datos de conexión | `.env` |
 
 ## Endpoints
 

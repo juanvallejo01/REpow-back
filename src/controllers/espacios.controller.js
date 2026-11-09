@@ -1,7 +1,8 @@
+// CONTROLADOR DE ESPACIOS: valida la peticion, llama al modelo y responde
 import EspacioModel from '../models/espacio.model.js'
 import ReservaModel from '../models/reserva.model.js'
 import { HttpError } from '../middlewares/errorHandler.js'
-import { idValido, fechaValida } from './validar.js'
+import { idValido, fechaValida } from '../utils/validar.js'
 
 const EspaciosController = {
   // GET /api/espacios

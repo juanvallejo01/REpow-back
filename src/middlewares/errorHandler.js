@@ -1,3 +1,4 @@
+// MANEJO DE ERRORES: convierte cualquier error en una respuesta { success: false, message }
 // error con codigo HTTP: throw new HttpError(404, 'Espacio no encontrado')
 export class HttpError extends Error {
   constructor(status, message){
@@ -8,9 +9,12 @@ export class HttpError extends Error {
 
 // errores de PostgreSQL que son culpa de los datos enviados, no del servidor
 const erroresPostgres = {
-  '23P01': [409, 'El espacio ya esta reservado en ese horario'],    // EXCLUDE reservas_sin_cruce
-  '23503': [404, 'El espacio no existe'],                            // llave foranea espacio_id
-  '23514': [400, 'Datos invalidos: la hora de fin debe ser despues del inicio'], // CHECK
+  // regla EXCLUDE reservas_sin_cruce: dos reservas se cruzan
+  '23P01': { status: 409, message: 'El espacio ya esta reservado en ese horario' },
+  // llave foranea espacio_id: el espacio no existe
+  '23503': { status: 404, message: 'El espacio no existe' },
+  // regla CHECK reservas_horario_valido
+  '23514': { status: 400, message: 'Datos invalidos: la hora de fin debe ser despues del inicio' },
 }
 
 // rutas que no existen
@@ -31,9 +35,9 @@ export function errorHandler(err, req, res, next){
     return res.status(err.status).json({ success: false, message: err.message })
   }
 
-  if (erroresPostgres[err.code]) {
-    const [status, message] = erroresPostgres[err.code]
-    return res.status(status).json({ success: false, message })
+  const errorConocido = erroresPostgres[err.code]
+  if (errorConocido) {
+    return res.status(errorConocido.status).json({ success: false, message: errorConocido.message })
   }
 
   console.error(err)

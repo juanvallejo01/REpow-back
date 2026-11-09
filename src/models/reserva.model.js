@@ -1,11 +1,19 @@
+// MODELO DE RESERVAS: solo consultas SQL a la tabla reservas
+// aqui esta el bloqueo optimista (ver update y cancel)
 import pool from '../config/db.js'
 
+// columnas que se devuelven en cada consulta
 const COLUMNAS = 'id, espacio_id, responsable, inicio, fin, estado, version, actualizada'
 
 const ReservaModel = {
+  // lista de la pantalla Reservas: con JOIN trae tambien el nombre del espacio
   async findAll(){
     const { rows } = await pool.query(
-      `SELECT ${COLUMNAS} FROM reservas ORDER BY inicio`
+      `SELECT r.id, r.espacio_id, e.nombre AS espacio_nombre, r.responsable,
+              r.inicio, r.fin, r.estado, r.version, r.actualizada
+         FROM reservas r
+         JOIN espacios e ON e.id = r.espacio_id
+        ORDER BY r.inicio`
     )
     return rows
   },

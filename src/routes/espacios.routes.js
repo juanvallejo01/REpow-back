@@ -1,3 +1,4 @@
+// RUTAS DE ESPACIOS: que funcion del controlador atiende cada URL
 import { Router } from 'express'
 import EspaciosController from '../controllers/espacios.controller.js'
 
